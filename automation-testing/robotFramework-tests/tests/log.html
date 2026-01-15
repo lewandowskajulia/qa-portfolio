@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="Robot Framework 7.3.2 (Python 3.13.0 on win32)" name="Generator">
+<meta content="Robot Framework 7.1.1 (Python 3.13.0 on win32)" name="Generator">
 <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAqAAAAAAAAAAAAAAAAAAAALIAAAD/AAAA4AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA4AAAAP8AAACxAAAAAAAAAKYAAAD/AAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAA/wAAAKkAAAD6AAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD/AAAA+gAAAMMAAAAAAAAAAgAAAGsAAABrAAAAawAAAGsAAABrAAAAawAAAGsAAABrAAAADAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAIsAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAFAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAADwAAAB8AAAAAAAAAGAAAABcAAAAAAAAAH8AAABKAAAAAAAAAAAAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAADCAAAA/wAAACkAAADqAAAA4QAAAAAAAAD7AAAA/wAAALAAAAAGAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAIwAAAP4AAAD/AAAA/wAAAGAAAAAAAAAAAAAAAMkAAAD/AAAAigAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAAAAAAAIAAAAcAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAA2gAAAP8AAAD7AAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAD/AAAAqwAAAP8AAACvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIAAAD/AAAAsgAAAAAAAAC5AAAA/wAAAMoAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMkAAAD/AAAAvAAAAAAAAAAAAAAAAAAAAKwAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArQAAAAAAAAAAwAMAAIABAAAf+AAAP/wAAD/8AAAgBAAAP/wAAD/8AAA//AAAJIwAADHEAAA//AAAP/wAAB/4AACAAQAAwAMAAA==">
 <style media="all">
 :root {
@@ -724,13 +724,10 @@ function toggleSuite(suiteId) {
     toggleElement(suiteId, ['keyword', 'suite', 'test']);
 }
 function toggleTest(testId) {
+    toggleElement(testId, ['keyword']);
     var test = window.testdata.findLoaded(testId);
-    var autoExpand = test.status == "FAIL" || test.status == "SKIP";
-    var closed = $('#' + testId).children('.element-header').hasClass('closed');
-    if (autoExpand && closed)
+    if (test.status == "FAIL" || test.status == "SKIP")
         expandFailed(test);
-    else
-        toggleElement(testId, ['keyword']);
 }
 function toggleKeyword(kwId) {
     toggleElement(kwId, ['keyword']);
@@ -1515,7 +1512,7 @@ window.testdata = function () {
     var STATUSES = ['FAIL', 'PASS', 'SKIP', 'NOT RUN'];
     var KEYWORD_TYPES = ['KEYWORD', 'SETUP', 'TEARDOWN', 'FOR', 'ITERATION', 'IF',
                          'ELSE IF', 'ELSE', 'RETURN', 'VAR', 'TRY', 'EXCEPT', 'FINALLY',
-                         'WHILE', 'GROUP', 'CONTINUE', 'BREAK', 'ERROR'];
+                         'WHILE', 'CONTINUE', 'BREAK', 'ERROR'];
     function addElement(elem) {
         if (!elem.id)
             elem.id = uniqueId();
@@ -2074,25 +2071,25 @@ storage = function () {
 window.output = {};
 </script>
 <script type="text/javascript">
-window.output["suite"] = [1,2,3,0,[],[1,0,8411],[],[[1,0,0,[],[1,371,8039],[[0,4,5,0,6,7,0,0,[1,373,7676],[[375,2,8]]],[0,9,5,0,10,11,0,0,[1,8050,137],[[8052,2,12]]],[0,9,5,0,10,13,0,0,[1,8189,101],[[8189,2,14]]],[0,15,5,0,16,17,0,0,[1,8290,101],[[8291,2,18]]],[0,19,5,0,20,21,0,0,[1,8392,17],[[8409,2,22]]]]]],[],[1,1,0,0]];
+window.output["suite"] = [1,2,3,0,[],[0,0,7126],[],[[1,0,0,[],[1,320,3089],[[0,4,5,0,6,7,0,0,[1,321,2743],[[322,2,8]]],[0,9,5,0,10,11,0,0,[1,3065,132],[[3065,2,12]]],[0,9,5,0,10,13,0,0,[1,3198,96],[[3198,2,14]]],[0,15,5,0,16,17,0,0,[1,3294,96],[[3295,2,18]]],[0,19,5,0,20,21,0,0,[1,3391,18],[[3409,2,22]]]]],[23,0,0,[],[0,3410,3714,24],[[0,4,5,0,6,7,0,0,[1,3411,3215],[[3411,2,8]]],[0,9,5,0,10,25,0,0,[1,6626,122],[[6627,2,26]]],[0,9,5,0,10,27,0,0,[1,6749,103],[[6749,2,28]]],[0,15,5,0,16,17,0,0,[1,6853,105],[[6853,2,18]]],[0,19,5,0,20,29,0,0,[0,6958,165],[[7117,2,30],[7117,5,24]]],[0,31,5,0,32,0,0,0,[3,7124,0],[]]]]],[],[2,1,1,0]];
 </script>
 <script type="text/javascript">
 window.output["strings"] = [];
 </script>
 <script type="text/javascript">
-window.output["strings"] = window.output["strings"].concat(["*","*Bad Login","*C:\\Users\\Piotr\\Documents\\GitHub\\qa-portfolio\\automation-testing\\robotFramework-tests\\tests\\bad_login.robot","*bad_login.robot","*Open Browser","*SeleniumLibrary","*<p>Opens a new browser instance to the optional <code>url\x3c/code>.\x3c/p>","*${URL}    chrome","*Opening browser 'chrome' to base url '<a href=\"https://www.saucedemo.com/\">https://www.saucedemo.com/\x3c/a>'.","*Input Text","*<p>Types the given <code>text\x3c/code> into the text field identified by <code>locator\x3c/code>.\x3c/p>","*id=user-name    ${USERNAME}","*Typing text 'standard_user' into text field 'id=user-name'.","*id=password    bad_password","*Typing text 'bad_password' into text field 'id=password'.","*Click Button","*<p>Clicks the button identified by <code>locator\x3c/code>.\x3c/p>","*id=login-button","*Clicking button 'id=login-button'.","*Page Should Contain","*<p>Verifies that current page contains <code>text\x3c/code>.\x3c/p>","*Epic sadface: Username and password do not match any user in this service","*Current page contains text 'Epic sadface: Username and password do not match any user in this service'."]);
+window.output["strings"] = window.output["strings"].concat(["*","*Bad Login","*C:\\Users\\Piotr\\Documents\\GitHub\\qa-portfolio\\automation-testing\\robotFramework-tests\\tests\\bad_login.robot","*bad_login.robot","*Open Browser","*SeleniumLibrary","*<p>Opens a new browser instance to the optional <code>url\x3c/code>.\x3c/p>","*${URL}    chrome","*Opening browser 'chrome' to base url '<a href=\"https://www.saucedemo.com/\">https://www.saucedemo.com/\x3c/a>'.","*Input Text","*<p>Types the given <code>text\x3c/code> into the text field identified by <code>locator\x3c/code>.\x3c/p>","*id=user-name    ${USERNAME}","*Typing text 'standard_user' into text field 'id=user-name'.","*id=password    bad_password","*Typing text 'bad_password' into text field 'id=password'.","*Click Button","*<p>Clicks the button identified by <code>locator\x3c/code>.\x3c/p>","*id=login-button","*Clicking button 'id=login-button'.","*Page Should Contain","*<p>Verifies that current page contains <code>text\x3c/code>.\x3c/p>","*Epic sadface: Username and password do not match any user in this service","*Current page contains text 'Epic sadface: Username and password do not match any user in this service'.","*Empty Username","*Page should have contained text 'Epic sadface: Username is required' but did not.","*id=user-name    \"\"","*Typing text '\"\"' into text field 'id=user-name'.","*id=password    ${PASSWORD}","*Typing text 'secret_sauce' into text field 'id=password'.","*Epic sadface: Username is required","*\x3c/td>\x3c/tr><tr><td colspan=\"3\"><a href=\"selenium-screenshot-1.png\"><img src=\"selenium-screenshot-1.png\" width=\"800px\">\x3c/a>","*Close Browser","*<p>Closes the current browser.\x3c/p>"]);
 </script>
 <script type="text/javascript">
-window.output["stats"] = [[{"elapsed":"00:00:08","fail":0,"label":"All Tests","pass":1,"skip":0}],[],[{"elapsed":"00:00:08","fail":0,"id":"s1","label":"Bad Login","name":"Bad Login","pass":1,"skip":0}]];
+window.output["stats"] = [[{"elapsed":"00:00:07","fail":1,"label":"All Tests","pass":1,"skip":0}],[],[{"elapsed":"00:00:07","fail":1,"id":"s1","label":"Bad Login","name":"Bad Login","pass":1,"skip":0}]];
 </script>
 <script type="text/javascript">
 window.output["errors"] = [];
 </script>
 <script type="text/javascript">
-window.output["baseMillis"] = 1765396237567;
+window.output["baseMillis"] = 1768517835902;
 </script>
 <script type="text/javascript">
-window.output["generated"] = 8434;
+window.output["generated"] = 7135;
 </script>
 <script type="text/javascript">
 window.output["expand_keywords"] = null;
@@ -2207,7 +2204,7 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="tagStatisticsRowTemplate">
   <tr class="row-${$item.index}">
-    <td class="stats-col-name" title="${doc}">
+    <td class="stats-col-name" title="{{html doc}}">
       <div class="stat-name">
         <span>{{html label}}</span>
         {{if info}}(${info}){{/if}}

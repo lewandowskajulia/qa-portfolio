@@ -1,52 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.13.0 on win32)" generated="2025-12-10T20:50:37.564950" rpa="false" schemaversion="5">
+<robot generator="Robot 7.1.1 (Python 3.13.0 on win32)" generated="2026-01-15T23:57:15.899963" rpa="false" schemaversion="5">
 <suite id="s1" name="Bad Login" source="C:\Users\Piotr\Documents\GitHub\qa-portfolio\automation-testing\robotFramework-tests\tests\bad_login.robot">
 <test id="s1-t1" name="Bad Login" line="10">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-12-10T20:50:37.941705" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<msg time="2026-01-15T23:57:16.223680" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
 <arg>${URL}</arg>
 <arg>chrome</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-12-10T20:50:37.940394" elapsed="7.676364"/>
+<status status="PASS" start="2026-01-15T23:57:16.223345" elapsed="2.743065"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-10T20:50:45.618533" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<msg time="2026-01-15T23:57:18.967413" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
 <arg>id=user-name</arg>
 <arg>${USERNAME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-10T20:50:45.617445" elapsed="0.137498"/>
+<status status="PASS" start="2026-01-15T23:57:18.966915" elapsed="0.132205"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-10T20:50:45.755984" level="INFO">Typing text 'bad_password' into text field 'id=password'.</msg>
+<msg time="2026-01-15T23:57:19.099862" level="INFO">Typing text 'bad_password' into text field 'id=password'.</msg>
 <arg>id=password</arg>
 <arg>bad_password</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-10T20:50:45.755500" elapsed="0.101293"/>
+<status status="PASS" start="2026-01-15T23:57:19.099591" elapsed="0.096280"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-12-10T20:50:45.857513" level="INFO">Clicking button 'id=login-button'.</msg>
+<msg time="2026-01-15T23:57:19.196736" level="INFO">Clicking button 'id=login-button'.</msg>
 <arg>id=login-button</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-10T20:50:45.857242" elapsed="0.101197"/>
+<status status="PASS" start="2026-01-15T23:57:19.196336" elapsed="0.096281"/>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<msg time="2025-12-10T20:50:45.975894" level="INFO">Current page contains text 'Epic sadface: Username and password do not match any user in this service'.</msg>
+<msg time="2026-01-15T23:57:19.310543" level="INFO">Current page contains text 'Epic sadface: Username and password do not match any user in this service'.</msg>
 <arg>Epic sadface: Username and password do not match any user in this service</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="PASS" start="2025-12-10T20:50:45.958856" elapsed="0.017170"/>
+<status status="PASS" start="2026-01-15T23:57:19.293067" elapsed="0.017601"/>
 </kw>
-<status status="PASS" start="2025-12-10T20:50:37.937856" elapsed="8.038597"/>
+<status status="PASS" start="2026-01-15T23:57:16.221849" elapsed="3.089214"/>
 </test>
-<status status="PASS" start="2025-12-10T20:50:37.567022" elapsed="8.410674"/>
+<test id="s1-t2" name="Empty Username" line="17">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-01-15T23:57:19.313272" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-01-15T23:57:19.312979" elapsed="3.214887"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-15T23:57:22.528986" level="INFO">Typing text '""' into text field 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<arg>""</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-15T23:57:22.528466" elapsed="0.122101"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-15T23:57:22.651270" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-15T23:57:22.650952" elapsed="0.103157"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2026-01-15T23:57:22.755154" level="INFO">Clicking button 'id=login-button'.</msg>
+<arg>id=login-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-15T23:57:22.754763" elapsed="0.104901"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2026-01-15T23:57:23.018696" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2026-01-15T23:57:23.018918" level="FAIL">Page should have contained text 'Epic sadface: Username is required' but did not.</msg>
+<arg>Epic sadface: Username is required</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="FAIL" start="2026-01-15T23:57:22.860096" elapsed="0.164887">Page should have contained text 'Epic sadface: Username is required' but did not.</status>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" start="2026-01-15T23:57:23.025508" elapsed="0.000060"/>
+</kw>
+<status status="FAIL" start="2026-01-15T23:57:19.312325" elapsed="3.713666">Page should have contained text 'Epic sadface: Username is required' but did not.</status>
+</test>
+<status status="FAIL" start="2026-01-15T23:57:15.902082" elapsed="7.125718"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Bad Login" id="s1" pass="1" fail="0" skip="0">Bad Login</stat>
+<stat pass="1" fail="1" skip="0" id="s1" name="Bad Login">Bad Login</stat>
 </suite>
 </statistics>
 <errors>
