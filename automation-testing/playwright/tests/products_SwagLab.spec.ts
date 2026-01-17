@@ -89,5 +89,38 @@ test.describe('Koszyk', () => {
         await page.click('[data-test^="remove"]');
         await page.goto('https://www.saucedemo.com/inventory.html');
         await expect(page.locator('.shopping_cart_badge')).toHaveCount(0);
-      })
+      });
+});
+
+
+test.describe('Sortowanie produktów', () => {
+    test('Domyślne ustawienie sortowania az', async ({ page}) => {
+        await expect(page.locator('.product_sort_container')).toHaveValue("az");
+        const names = await page.locator('.inventory_item_name').allTextContents();
+        const sorted = [...names].sort();
+        expect(names).toEqual(sorted);
+    });
+
+    test('Zmiana sortowania produktów na za', async ({ page }) => {
+        await page.locator('[data-test="product-sort-container"]').selectOption('za');
+        const names = await page.locator('.inventory_item_name').allTextContents();
+        const sorted = [...names].sort().reverse();
+        expect(names).toEqual(sorted);
+    });
+
+    test('Zmiana sortowania po cenie rosnąco', async ({ page }) => {
+        await page.locator('[data-test="product-sort-container"]').selectOption('lohi');
+        const prices = await page.locator('.inventory_item_price').allTextContents();
+        const numbers = prices.map(p => parseFloat(p.replace('$', '')));
+        expect(numbers[0]).toBeLessThanOrEqual(numbers[numbers.length - 1]);
+    
+    });
+
+    test('Zmiana sortowania po cenie malejąco', async ({ page }) => {
+        await page.locator('[data-test="product-sort-container"]').selectOption('hilo');
+        const prices = await page.locator('.inventory_item_price').allTextContents();
+        const numbers = prices.map(p => parseFloat(p.replace('$', '')));
+        expect(numbers[0]).toBeGreaterThanOrEqual(numbers[numbers.length - 1]);
+  });
+
 });
