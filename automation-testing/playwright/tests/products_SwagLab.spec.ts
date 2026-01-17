@@ -44,10 +44,9 @@ test.describe('Testy ogólne', () => {
 });
 
 
-test.describe.only('Koszyk', () => {
+test.describe('Koszyk', () => {
 
     test('Przycisk Add to cart', async ({ page }) => {
-
         await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
         await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
     });
@@ -58,5 +57,37 @@ test.describe.only('Koszyk', () => {
         await expect(page.locator('.shopping_cart_badge')).toHaveCount(0);
     });
 
+    test('Dodanie wielu produktów do koszyka', async ({ page }) => {
+        const buttons = page.locator('text=Add to cart');
+        await buttons.nth(0).click();
+        await buttons.nth(1).click();
+        await buttons.nth(2).click();
+        await expect(page.locator('.shopping_cart_badge')).toHaveText('3');
+    });
   
+    test('Produkt po dodaniu jest widoczny w koszyku', async ({ page }) => {
+        await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+        await page.locator('[data-test="shopping-cart-link"]').click();
+        await expect(page.locator('.cart_item')).toBeVisible();
+    });
+
+    test('Badge nie jest widoczny przy pustym koszyku', async ({ page }) => {
+        await expect(page.locator('.shopping_cart_badge')).toBeHidden();
+    });
+
+    test('Koszyk zapamiętuje stan po odświeżeniu strony', async ({ page }) => {
+        await page.click('text=Add to cart');
+        await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+        await page.reload();
+        await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    });
+
+    test('Aktualizacja Produkty po usunięciu z koszyka', async ({ page }) => {
+        await page.click('[data-test^="add-to-cart"]');
+        await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+        await page.locator('[data-test="shopping-cart-link"]').click();
+        await page.click('[data-test^="remove"]');
+        await page.goto('https://www.saucedemo.com/inventory.html');
+        await expect(page.locator('.shopping_cart_badge')).toHaveCount(0);
+      })
 });
