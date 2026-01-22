@@ -8,12 +8,7 @@ describe('Login', () => {
     cy.visit(URL)
   })
 
-    it('should display login form', () => {
-      cy.get('#user-name').should('be.visible')
-      cy.get('#password').should('be.visible')
-      cy.get('#login-button').should('be.visible')
-    })
-
+  describe('Successful login', () => {
     it('should log in successfully with valid credentials', () => {
       cy.get('#user-name').type(VALID_USER)
       cy.get('#password').type(VALID_PASSWORD)
@@ -30,7 +25,9 @@ describe('Login', () => {
       cy.get('#password').type(`${VALID_PASSWORD}{enter}`)
       cy.url().should('include', 'https://www.saucedemo.com/inventory.html')
     })
+  })
 
+  describe('Validation errors', () => {
     it('should display an error for invalid username and password', () => {
       cy.get('#user-name').type('wrong')
       cy.get('#password').type('wrong')
@@ -61,14 +58,31 @@ describe('Login', () => {
       cy.get('#login-button').click()
       cy.get('[data-test="error"]').should('be.visible').and('contain', 'Epic sadface: Sorry, this user has been locked out.')
     })
+  })
+
+describe('Logout', () => {
+
+  beforeEach(() => {
+    cy.get('#user-name').type(VALID_USER)
+    cy.get('#password').type(VALID_PASSWORD)
+    cy.get('#login-button').click()
+  })
 
     it('should log out the user and redirect to the login page', () => {
-      cy.get('#user-name').type(VALID_USER)
-      cy.get('#password').type(VALID_PASSWORD)
-      cy.get('#login-button').click()
       cy.get('#react-burger-menu-btn').click()
       cy.get('#logout_sidebar_link').click()
       cy.url().should('eq', URL)
     })
+
+    it('should not allow access to inventory page without login', () => {
+      cy.get('#react-burger-menu-btn').click()
+      cy.get('#logout_sidebar_link').click()
+      cy.url().should('eq', URL)
+      cy.go('back')
+      cy.url().should('eq', URL)
+      cy.get('[data-test="error"]').should('be.visible').and('contain', "Epic sadface: You can only access '/inventory.html' when you are logged in.")
+    })
   })
+
+})
   
