@@ -3,6 +3,8 @@ describe('Login', () => {
   const URL = 'https://www.saucedemo.com/'
   const VALID_USER = 'standard_user'
   const VALID_PASSWORD = 'secret_sauce'
+  const PRODUCTS_PAGE = 'https://www.saucedemo.com/inventory.html'
+
 
   beforeEach(() => {
     cy.visit(URL)
@@ -13,7 +15,7 @@ describe('Login', () => {
       cy.get('#user-name').type(VALID_USER)
       cy.get('#password').type(VALID_PASSWORD)
       cy.get('#login-button').click()
-      cy.url().should('include', 'https://www.saucedemo.com/inventory.html')
+      cy.url().should('include', PRODUCTS_PAGE)
     }) 
 
     it('should mask password input', () => {
@@ -23,7 +25,7 @@ describe('Login', () => {
     it('should submit login form when pressing Enter', () => {
       cy.get('#user-name').type(VALID_USER)
       cy.get('#password').type(`${VALID_PASSWORD}{enter}`)
-      cy.url().should('include', 'https://www.saucedemo.com/inventory.html')
+      cy.url().should('include', PRODUCTS_PAGE)
     })
   })
 
