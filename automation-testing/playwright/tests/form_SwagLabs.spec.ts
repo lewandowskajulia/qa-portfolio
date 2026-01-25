@@ -63,7 +63,7 @@ test('Zamknięcie komunikatu error oraz poprawne wypełnienie formularza', async
 })
 
 
-test.describe.only('Podsumowanie zamówienia i zakup produktu' , () => {
+test.describe('Podsumowanie zamówienia i zakup produktu' , () => {
   test.beforeEach( async ({ page }) => {
     await page.locator('[data-test="checkout"]').click();
     await page.locator('[data-test="firstName"]').fill('Qwe');
@@ -82,8 +82,8 @@ test('Podsumowanie zamówienia zawiera produkt i cene', async ({ page }) => {
 test('Cena produktu zgadza się z ceną produktu na podsumowaniu', async ({ page }) => {
   const itemPrice = await page.locator('.inventory_item_price').textContent();
   const priceInSummary = await page.locator('.summary_subtotal_label').textContent();
-  const itemPriceNumber = Number(itemPrice.replace('$', ''));
-  const summaryPriceNumber = Number(priceInSummary.replace('Item total: $', ''));
+  const itemPriceNumber = Number((itemPrice ?? '').replace('$', ''));
+  const summaryPriceNumber = Number((priceInSummary ?? '').replace('Item total: $', ''));
   expect(itemPriceNumber).toBe(summaryPriceNumber);
 });
 
@@ -91,9 +91,9 @@ test('Do zakupu doliczany jest podatek', async ({ page }) => {
   const itemPriceText = await page.locator('.summary_subtotal_label').textContent();
   const taxText = await page.locator('.summary_tax_label').textContent();
   const totalText = await page.locator('.summary_total_label').textContent();
-  const itemPrice = Number(itemPriceText.replace('Item total: $', ''));
-  const tax = Number(taxText.replace('Tax: $', ''));
-  const total = Number(totalText.replace('Total: $', ''));
+  const itemPrice = Number((itemPriceText ?? '').replace('Item total: $', ''));
+  const tax = Number((taxText ?? '').replace('Tax: $', ''));
+  const total = Number((totalText ?? '').replace('Total: $', ''));
   expect(total).toBe(itemPrice + tax);
 });
 
@@ -103,4 +103,4 @@ test('Zakup produktu', async ({ page }) => {
   await expect(page.locator('.complete-text')).toHaveText('Your order has been dispatched, and will arrive just as fast as the pony can get there!');
 });
 
-})
+}) 
