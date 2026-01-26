@@ -8,10 +8,10 @@ test.beforeEach(async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
 });
 
-test.describe('Logowanie do Swag Labs', () => {
+test.describe('Login functionality', () => {
   for (const { user, pass } of loginCases) {
 
-test('Poprawne dane', async ({ page }) => {
+test('should log in successfully with valid username and password', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
   await page.locator('[data-test="login-button"]').click();
@@ -19,7 +19,7 @@ test('Poprawne dane', async ({ page }) => {
   await expect(page.getByText('Products')).toBeVisible();
 });
 
-test('Przycisk Enter', async ({ page }) => {
+test('should log in successfully when pressing Enter instead of clicking the login button', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
   await page.locator('[data-test="password"]').press('Enter');
@@ -27,26 +27,26 @@ test('Przycisk Enter', async ({ page }) => {
   await expect(page.getByText('Products')).toBeVisible();
 });
 
-  test('Błędne hasło', async ({ page }) => {
+  test('should display an error message when an incorrect password is provided', async ({ page }) => {
     await page.locator('[data-test="username"]').fill(user);
     await page.locator('[data-test="password"]').fill('1234');
     await page.locator('[data-test="login-button"]').click();
     await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
 
-test('Puste dane', async ({ page }) => {
+test('should display an error message when username and password are empty', async ({ page }) => {
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username is required');
 });
 
-test('Spacje w loginie i haśle', async ({ page }) => {
+test('should display an error message when username and password contain only spaces', async ({ page }) => {
   await page.locator('[data-test="username"]').fill('      ');
   await page.locator('[data-test="password"]').fill('      ');
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
 
-test('Login z Caps Lockiem', async ({ page }) => {
+test('should not log in when the username is entered in uppercase', async ({ page }) => {
   await page.locator('[data-test="username"]').press('CapsLock');
   await page.locator('[data-test="username"]').fill('STANDARD_USER');
   await page.locator('[data-test="password"]').press('CapsLock');
@@ -55,7 +55,7 @@ test('Login z Caps Lockiem', async ({ page }) => {
   await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
 
-test('Hasło z Caps Lockiem', async ({ page }) => {
+test('should not log in when the password is entered in uppercase', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').press('CapsLock');
   await page.locator('[data-test="password"]').fill('SECRET_SAUCE');
@@ -63,7 +63,7 @@ test('Hasło z Caps Lockiem', async ({ page }) => {
   await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
 
-test('Login i hasło z Caps Lockiem', async ({ page }) => {
+test('should not log in when both username and password are entered in uppercase', async ({ page }) => {
   await page.locator('[data-test="password"]').press('CapsLock');
   await page.locator('[data-test="username"]').fill("STANDARD_USER");
   await page.locator('[data-test="password"]').fill('SECRET_SAUCE');
@@ -71,20 +71,20 @@ test('Login i hasło z Caps Lockiem', async ({ page }) => {
   await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
 
-test('Brak hasła', async ({ page }) => {
+test('should display an error message when password is missing', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Password is required');
 });
 
-test('Zablokowany użytkownik', async ({ page }) => {
+test('should display a locked out message when logging in with a blocked user account', async ({ page }) => {
   await page.locator('[data-test="username"]').fill('locked_out_user');
   await page.locator('[data-test="password"]').fill(pass);
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toHaveText("Epic sadface: Sorry, this user has been locked out.");
 });
 
-test('Reset błędu po ponownym zalogowaniu', async ({ page }) => {
+test('should clear the error message after a successful login following a failed attempt', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill('1234');
   await page.locator('[data-test="login-button"]').click();
@@ -95,12 +95,12 @@ test('Reset błędu po ponownym zalogowaniu', async ({ page }) => {
   await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 });
 
-test('Wejście na podtsronę "Produkty" bez zalogowania', async ({ page }) => {
+test('should prevent access to the inventory page when the user is not logged in', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/inventory.html');
   await expect(page.locator('[data-test="error"]')).toHaveText("Epic sadface: You can only access '/inventory.html' when you are logged in.");
 });
 
-test('Powrót do podstrony "Produkty" po wylogowaniu', async ({ page }) => {
+test('should prevent access to the inventory page after the user logs out', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
   await page.locator('[data-test="login-button"]').click();
