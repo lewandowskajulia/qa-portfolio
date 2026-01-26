@@ -10,26 +10,26 @@ test.beforeEach(async ({ page }) => {
 
 });
 
-test.describe('Testy ogólne', () => {
+test.describe('Inventory page - general functionality', () => {
 
-    test('Nagłowek strony', async ({ page }) => {
+    test('should display the Products page header', async ({ page }) => {
       await expect(page.getByText('Products')).toBeVisible();
     });
 
-    test('Widoczna lista produktów', async ({ page }) => {
+    test('should display a list of products', async ({ page }) => {
       const products = page.locator('.inventory_item');
       await expect(products).toHaveCount(6);
     });
 
 
-    test('Pierwszy produkt zawiera nazwę, cenę i opis', async ({ page }) => {
+    test('should display name, price and description for the first product', async ({ page }) => {
       const product = page.locator('.inventory_item').first();
       await expect(product.locator('.inventory_item_name')).toBeVisible();
       await expect(product.locator('.inventory_item_price')).toBeVisible();
       await expect(product.locator('.inventory_item_desc')).toBeVisible();
     });
 
-    test('Wszystkie produkty zawierają nazwę, cenę i opis', async ({ page }) => {
+    test('should display name, price and description for all products', async ({ page }) => {
       const products = page.locator('.inventory_item');
       const count = await products.count();
     
@@ -44,20 +44,20 @@ test.describe('Testy ogólne', () => {
 });
 
 
-test.describe('Koszyk', () => {
+test.describe('Shopping cart functionality', () => {
 
-    test('Przycisk Add to cart', async ({ page }) => {
+    test('should add a product to the cart when clicking Add to cart', async ({ page }) => {
         await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
         await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
     });
 
-    test('Usunięcie produktu z koszyka za pomocą przycisku Remove', async ({ page }) => {
+    test('should remove a product from the cart when clicking Remove', async ({ page }) => {
         await page.click('text=Add to cart');
         await page.click('text=Remove');
         await expect(page.locator('.shopping_cart_badge')).toHaveCount(0);
     });
 
-    test('Dodanie wielu produktów do koszyka', async ({ page }) => {
+    test('should allow adding multiple products to the cart', async ({ page }) => {
         const buttons = page.locator('text=Add to cart');
         await buttons.nth(0).click();
         await buttons.nth(1).click();
@@ -65,24 +65,24 @@ test.describe('Koszyk', () => {
         await expect(page.locator('.shopping_cart_badge')).toHaveText('3');
     });
   
-    test('Produkt po dodaniu jest widoczny w koszyku', async ({ page }) => {
+    test('should display added product in the cart', async ({ page }) => {
         await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
         await page.locator('[data-test="shopping-cart-link"]').click();
         await expect(page.locator('.cart_item')).toBeVisible();
     });
 
-    test('Badge nie jest widoczny przy pustym koszyku', async ({ page }) => {
+    test('should not display the cart badge when the cart is empty', async ({ page }) => {
         await expect(page.locator('.shopping_cart_badge')).toBeHidden();
     });
 
-    test('Koszyk zapamiętuje stan po odświeżeniu strony', async ({ page }) => {
+    test('should preserve cart state after page refresh', async ({ page }) => {
         await page.click('text=Add to cart');
         await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
         await page.reload();
         await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
     });
 
-    test('Aktualizacja Produkty po usunięciu z koszyka', async ({ page }) => {
+    test('should update the cart badge after removing a product from the cart', async ({ page }) => {
         await page.click('[data-test^="add-to-cart"]');
         await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
         await page.locator('[data-test="shopping-cart-link"]').click();
@@ -93,22 +93,23 @@ test.describe('Koszyk', () => {
 });
 
 
-test.describe('Sortowanie produktów', () => {
-    test('Domyślne ustawienie sortowania az', async ({ page}) => {
+test.describe('Product sorting', () => {
+
+    test('should sort products by name in ascending order by default', async ({ page}) => {
         await expect(page.locator('.product_sort_container')).toHaveValue("az");
         const names = await page.locator('.inventory_item_name').allTextContents();
         const sorted = [...names].sort();
         expect(names).toEqual(sorted);
     });
 
-    test('Zmiana sortowania produktów na za', async ({ page }) => {
+    test('should sort products by name in descending order', async ({ page }) => {
         await page.locator('[data-test="product-sort-container"]').selectOption('za');
         const names = await page.locator('.inventory_item_name').allTextContents();
         const sorted = [...names].sort().reverse();
         expect(names).toEqual(sorted);
     });
 
-    test('Zmiana sortowania po cenie rosnąco', async ({ page }) => {
+    test('should sort products by price from low to high', async ({ page }) => {
         await page.locator('[data-test="product-sort-container"]').selectOption('lohi');
         const prices = await page.locator('.inventory_item_price').allTextContents();
         const numbers = prices.map(p => parseFloat(p.replace('$', '')));
@@ -116,7 +117,7 @@ test.describe('Sortowanie produktów', () => {
     
     });
 
-    test('Zmiana sortowania po cenie malejąco', async ({ page }) => {
+    test('should sort products by price from high to low', async ({ page }) => {
         await page.locator('[data-test="product-sort-container"]').selectOption('hilo');
         const prices = await page.locator('.inventory_item_price').allTextContents();
         const numbers = prices.map(p => parseFloat(p.replace('$', '')));
