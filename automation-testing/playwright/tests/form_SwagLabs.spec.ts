@@ -99,7 +99,7 @@ test('should include tax in the total order price', async ({ page }) => {
   expect(total).toBe(itemPrice + tax);
 });
 
-test('should  complete the purchase successfully', async ({ page }) => {
+test('should complete the purchase successfully', async ({ page }) => {
   await page.locator('[data-test="finish"]').click();
   await expect(page.getByText('Thank you for your order!')).toBeVisible();
   await expect(page.locator('.complete-text')).toHaveText('Your order has been dispatched, and will arrive just as fast as the pony can get there!');
