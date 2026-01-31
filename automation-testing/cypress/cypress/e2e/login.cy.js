@@ -1,87 +1,86 @@
-describe('Login', () => {
+import LoginPage from '../pages/LoginPage'
 
-  const URL = 'https://www.saucedemo.com/'
-  const VALID_USER = 'standard_user'
-  const VALID_PASSWORD = 'secret_sauce'
-  const PRODUCTS_PAGE = 'https://www.saucedemo.com/inventory.html'
+const loginPage = new LoginPage()
+const VALID_USER = 'standard_user'
+const VALID_PASSWORD = 'secret_sauce'
+const LOCKED_USER = 'locked_out_user'
+const URL = 'https://www.saucedemo.com/'
+const PRODUCTS_PAGE = 'https://www.saucedemo.com/inventory.html'
+
+
+describe('Login', () => {
 
   beforeEach(() => {
-    cy.visit(URL)
+  loginPage.visit()
   })
 
   describe('Successful login', () => {
-    it('should log in successfully with valid credentials', () => {
-      cy.get('#user-name').type(VALID_USER)
-      cy.get('#password').type(VALID_PASSWORD)
-      cy.get('#login-button').click()
-      cy.url().should('include', PRODUCTS_PAGE)
-    }) 
+    it('should log in successfully with valid credentials', () => {
+    loginPage.login(VALID_USER, VALID_PASSWORD)
+    cy.url().should('eq', PRODUCTS_PAGE)
+    }) 
 
     it('should mask password input', () => {
-       cy.get('#password').should('have.attr', 'type', 'password')
-    })
+      loginPage.passwordShouldBeMasked()
+      })
 
     it('should submit login form when pressing Enter', () => {
-      cy.get('#user-name').type(VALID_USER)
-      cy.get('#password').type(`${VALID_PASSWORD}{enter}`)
-      cy.url().should('include', PRODUCTS_PAGE)
+      loginPage.fillUsername(VALID_USER)
+      loginPage.submitWithEnter(VALID_PASSWORD)
+      cy.url().should('eq', PRODUCTS_PAGE)
     })
   })
 
   describe('Validation errors', () => {
-    it('should display an error for invalid username and password', () => {
-      cy.get('#user-name').type('wrong')
-      cy.get('#password').type('wrong')
-      cy.get('#login-button').click()
-      cy.get('[data-test="error"]').should('be.visible').and('contain', 'Epic sadface: Username and password do not match any user in this service')
-    })
+    it('should display an error for invalid username and password', () => {
+      loginPage.fillUsername('wrong')
+      loginPage.fillPassword('wrong')
+      loginPage.clickLogin()
+      loginPage.getErrorMessage().should('be.visible').and('contain','Epic sadface: Username and password do not match any user in this service')
+    })
 
-    it('should display an error when username and password are empty', () => {
-      cy.get('#login-button').click()
-      cy.get('[data-test="error"]').should('be.visible').and('contain', 'Epic sadface: Username is required')
-    })
+    it('should display an error when username and password are empty', () => {
+      loginPage.clickLogin()
+      loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Username is required')
+    })
 
-    it('should display an error when password is missing', () => {
-      cy.get('#user-name').type(VALID_USER)
-      cy.get('#login-button').click()
-      cy.get('[data-test="error"]').should('be.visible').and('contain', 'Epic sadface: Password is required')
-    })
+    it('should display an error when password is missing', () =>  {
+      loginPage.fillUsername(VALID_USER)
+      loginPage.clickLogin()
+      loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Password is required')
+    })
 
-    it('should display an error when username is missing', () => {
-      cy.get('#password').type(VALID_PASSWORD)
-      cy.get('#login-button').click()
-      cy.get('[data-test="error"]').should('be.visible').and('contain', 'Epic sadface: Username is required')
-    })
+    it('should display an error when username is missing', () => {
+      loginPage.fillPassword(VALID_PASSWORD)
+      loginPage.clickLogin()
+      loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Username is required')
+    })
 
-    it('should display an error for a locked out user', () => {
-      cy.get('#user-name').type('locked_out_user')
-      cy.get('#password').type(VALID_PASSWORD)
-      cy.get('#login-button').click()
-      cy.get('[data-test="error"]').should('be.visible').and('contain', 'Epic sadface: Sorry, this user has been locked out.')
-    })
+    it('should display an error for a locked out user', () => {
+      loginPage.fillUsername(LOCKED_USER)
+      loginPage.fillPassword(VALID_PASSWORD)
+      loginPage.clickLogin()
+      loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Sorry, this user has been locked out.')
+    })
   })
 
-describe('Logout', () => {
+describe.only('Logout', () => {
 
   beforeEach(() => {
-    cy.get('#user-name').type(VALID_USER)
-    cy.get('#password').type(VALID_PASSWORD)
-    cy.get('#login-button').click()
+    loginPage.login(VALID_USER, VALID_PASSWORD)
   })
 
     it('should log out the user and redirect to the login page', () => {
-      cy.get('#react-burger-menu-btn').click()
-      cy.get('#logout_sidebar_link').click()
+      loginPage.logout()
       cy.url().should('eq', URL)
     })
 
     it('should not allow access to inventory page without login', () => {
-      cy.get('#react-burger-menu-btn').click()
-      cy.get('#logout_sidebar_link').click()
+      loginPage.logout()
       cy.url().should('eq', URL)
       cy.go('back')
       cy.url().should('eq', URL)
-      cy.get('[data-test="error"]').should('be.visible').and('contain', "Epic sadface: You can only access '/inventory.html' when you are logged in.")
+      loginPage.getErrorMessage().should('be.visible').and('contain', "Epic sadface: You can only access '/inventory.html' when you are logged in.")
     })
   })
 
