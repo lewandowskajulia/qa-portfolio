@@ -5,7 +5,6 @@ describe('Login', () => {
   const VALID_PASSWORD = 'secret_sauce'
   const PRODUCTS_PAGE = 'https://www.saucedemo.com/inventory.html'
 
-
   beforeEach(() => {
     cy.visit(URL)
   })
