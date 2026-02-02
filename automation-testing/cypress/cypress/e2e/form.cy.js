@@ -1,16 +1,18 @@
 import FormPage from '../pages/FormPage'
+import CheckoutOverviewPage from '../pages/CheckoutOverviewPage'
+import CheckoutCompletePage from '../pages/CheckoutCompletePage'
 import LoginPage from '../pages/LoginPage'
 import ProductsPage from '../pages/ProductsPage'
 
 const loginPage = new LoginPage()
 const productsPage = new ProductsPage()
 const formPage = new FormPage()
+const checkoutOverviewPage = new CheckoutOverviewPage()
+const checkoutCompletePage = new CheckoutCompletePage()
 const URL = 'https://www.saucedemo.com/'
 const VALID_USER = 'standard_user'
 const VALID_PASSWORD = 'secret_sauce'
 const PRODUCTS_PAGE = 'https://www.saucedemo.com/inventory.html'
-const CART = '.shopping_cart_link'
-
 const FIRSTNAME = 'Jan'
 const LASTNAME = 'Nowak'
 const POSTALCODE = '12-345'
@@ -28,6 +30,7 @@ describe('Cart and Checkout', () => {
     productsPage.getCartBadge().should('have.text', '1')
     productsPage.getCartLink().click()
     formPage.clickCheckOutButton()
+    
 
   });
 
@@ -35,7 +38,7 @@ describe('Cart and Checkout', () => {
 
     it('should fill out the form correctly', () => {
       formPage.fillCheckoutForm(FIRSTNAME, LASTNAME, POSTALCODE);
-      cy.contains('Checkout: Overview').should('be.visible');
+      checkoutOverviewPage.shouldBeVisible()
     });
 
     it('should show error when first name is missing', () => {
@@ -68,7 +71,7 @@ describe('Cart and Checkout', () => {
       formPage.getErrorMessage().should('not.exist');
       formPage.fillPostalCode(POSTALCODE)
       formPage.clickContinueButton()
-      cy.contains('Checkout: Overview').should('be.visible');
+      checkoutOverviewPage.shouldBeVisible()
     });
 
   });
@@ -77,31 +80,32 @@ describe('Cart and Checkout', () => {
 
     beforeEach(() => {
       formPage.fillCheckoutForm(FIRSTNAME, LASTNAME, POSTALCODE)
-      formPage.shouldBeVisible()
+      checkoutOverviewPage.shouldBeVisible()
     });
 
-    it.only('should display product and price in order summary', () => {
-      productsPage(itemName).should('be.visible');
-      cy.get('.inventory_item_price').should('be.visible');
-      cy.get('.summary_total_label').should('be.visible');
+    it('should display product and price in order summary', () => {
+      checkoutOverviewPage.getItemName().should('be.visible')
+      checkoutOverviewPage.getItemPrice().should('be.visible')
+      checkoutOverviewPage.getTotal().should('be.visible')
     });
 
     it('should match product price with order summary subtotal', () => {
-      cy.get('.inventory_item_price').invoke('text').then(itemPriceText => {
+      checkoutOverviewPage.getItemPriceText().then(itemPriceText => {
       const itemPrice = parseFloat(itemPriceText.replace('$', ''));
-      cy.get('.summary_subtotal_label').invoke('text').then(summaryText => {
+      checkoutOverviewPage.getSubtotalText().then(summaryText => {
       const summaryPrice = parseFloat(summaryText.replace('Item total: $', ''));
       expect(itemPrice).to.equal(summaryPrice);
       });
     });
     });
 
+
     it('should add tax to the order total', () => {
-      cy.get('.summary_subtotal_label').invoke('text').then(subtotalText => {
+      checkoutOverviewPage.getSubtotalText().then(subtotalText => {
       const subtotal = parseFloat(subtotalText.replace('Item total: $', ''));
-      cy.get('.summary_tax_label').invoke('text').then(taxText => {
+      checkoutOverviewPage.getTaxText().then(taxText => {
       const tax = parseFloat(taxText.replace('Tax: $', ''));
-      cy.get('.summary_total_label').invoke('text').then(totalText => {
+      checkoutOverviewPage.getTotalText().then(totalText => {
       const total = parseFloat(totalText.replace('Total: $', ''));
       expect(total).to.equal(subtotal + tax);});
       });
@@ -109,9 +113,9 @@ describe('Cart and Checkout', () => {
     });
 
     it('should complete the purchase successfully', () => {
-      formPage.clickFinishButton()
-      cy.contains('Thank you for your order!').should('be.visible');
-      cy.get('.complete-text').should('have.text','Your order has been dispatched, and will arrive just as fast as the pony can get there!');
+      checkoutOverviewPage.clickFinishButton()
+      checkoutCompletePage.completeTextShouldBeVisible()
+      checkoutCompletePage.getMessage().should('have.text','Your order has been dispatched, and will arrive just as fast as the pony can get there!');
     });
 
   });
