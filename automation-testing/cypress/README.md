@@ -24,3 +24,14 @@ cart functionality and checkout process.
 - JavaScript (ES6)
 - Page Object Model (POM) for test organization
 - Node.js / npm for dependencies
+
+## How to run tests
+
+1. Clone the repository
+2. Install dependencies:
+   npm install
+3. Run Cypress Test Runner:
+   npx cypress open
+4. Run tests in headless mode:
+   npx cypress run
+
