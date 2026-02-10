@@ -3,12 +3,13 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 
 
-const loginCases = [
-  { user: 'standard_user', pass: 'secret_sauce' },
-];
+const loginCases = [{ user: 'standard_user', pass: 'secret_sauce' },];
+
+const url = 'https://www.saucedemo.com/';
+const inventoryURL = 'https://www.saucedemo.com/inventory.html';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
+  await page.goto(url);
 });
 
 test.describe('Login functionality', () => {
@@ -18,7 +19,7 @@ test('should log in successfully with valid username and password', async ({ pag
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
   await page.locator('[data-test="login-button"]').click();
-  await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+  await expect(page).toHaveURL(inventoryURL);
   await expect(page.getByText('Products')).toBeVisible();
 });
 
@@ -26,7 +27,7 @@ test('should log in successfully when pressing Enter instead of clicking the log
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
   await page.locator('[data-test="password"]').press('Enter');
-  await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+  await expect(page).toHaveURL(inventoryURL);
   await expect(page.getByText('Products')).toBeVisible();
 });
 
@@ -95,11 +96,11 @@ test('should clear the error message after a successful login following a failed
   await page.locator('[data-test="password"]').fill(pass);
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).not.toBeVisible();
-  await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+  await expect(page).toHaveURL(inventoryURL);
 });
 
 test('should prevent access to the inventory page when the user is not logged in', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/inventory.html');
+  await page.goto(inventoryURL);
   await expect(page.locator('[data-test="error"]')).toHaveText("Epic sadface: You can only access '/inventory.html' when you are logged in.");
 });
 
@@ -110,7 +111,7 @@ test('should prevent access to the inventory page after the user logs out', asyn
   await page.getByRole('button', { name: 'Open Menu' }).click();
   await page.locator('[data-test="logout-sidebar-link"]').click();
   await page.goBack();
-  await expect(page).toHaveURL('https://www.saucedemo.com/');
+  await expect(page).toHaveURL(url);
   await expect(page.locator('[data-test="error"]')).toHaveText("Epic sadface: You can only access '/inventory.html' when you are logged in.");
 });
 
