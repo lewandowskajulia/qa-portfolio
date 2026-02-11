@@ -1,12 +1,15 @@
 import { test, expect } from '@playwright/test';
 
+const url = 'https://www.saucedemo.com/';
+const inventoryURL = 'https://www.saucedemo.com/inventory.html';
+
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
+  await page.goto(url);
   await page.locator('[data-test="username"]').fill("standard_user");
   await page.locator('[data-test="password"]').fill("secret_sauce");
   await page.locator('[data-test="login-button"]').click();
-  await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+  await expect(page).toHaveURL(inventoryURL);
 
 });
 
@@ -87,7 +90,7 @@ test.describe('Shopping cart functionality', () => {
         await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
         await page.locator('[data-test="shopping-cart-link"]').click();
         await page.click('[data-test^="remove"]');
-        await page.goto('https://www.saucedemo.com/inventory.html');
+        await page.goto(inventoryURL);
         await expect(page.locator('.shopping_cart_badge')).toHaveCount(0);
       });
 });
