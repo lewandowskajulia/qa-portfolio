@@ -26,6 +26,7 @@ test.describe('Checkout form validation' , () => {
     await expect(page.getByText('Checkout: Overview')).toBeVisible(); 
   });
 
+
 test('should display an error message when first name is missing', async ({ page }) => {
   await page.locator('[data-test="checkout"]').click();
   await page.locator('[data-test="lastName"]').fill('Qwe');
@@ -33,6 +34,7 @@ test('should display an error message when first name is missing', async ({ page
   await page.locator('[data-test="continue"]').click();
   await expect(page.locator('[data-test="error"]')).toHaveText('Error: First Name is required');
 });
+
 
 test('should display an error message when last name is missing', async ({ page }) => {
   await page.locator('[data-test="checkout"]').click();
