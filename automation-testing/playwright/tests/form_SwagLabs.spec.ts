@@ -15,6 +15,8 @@ test.beforeEach(async ({ page }) => {
 
 });
 
+
+
 test.describe('Checkout form validation' , () => {
 
   test('should proceed to checkout overview when the form is filled with valid data', async ({ page }) => { 
