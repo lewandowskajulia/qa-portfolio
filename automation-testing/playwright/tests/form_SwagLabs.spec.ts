@@ -15,8 +15,6 @@ test.beforeEach(async ({ page }) => {
 
 });
 
-
-
 test.describe('Checkout form validation' , () => {
 
   test('should proceed to checkout overview when the form is filled with valid data', async ({ page }) => { 
@@ -27,7 +25,6 @@ test.describe('Checkout form validation' , () => {
     await page.locator('[data-test="continue"]').click(); 
     await expect(page.getByText('Checkout: Overview')).toBeVisible(); 
   });
-
 
 test('should display an error message when first name is missing', async ({ page }) => {
   await page.locator('[data-test="checkout"]').click();
