@@ -12,9 +12,13 @@ test.beforeEach(async ({ page }) => {
   await page.goto(url);
 });
 
+
+
+
 test.describe('Login functionality', () => {
   for (const { user, pass } of loginCases) {
 
+    
 test('should log in successfully with valid username and password', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
