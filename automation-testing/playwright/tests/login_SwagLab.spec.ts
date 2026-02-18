@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 test.describe('Login functionality', () => {
   for (const { user, pass } of loginCases) {
 
-    
+
 test('should log in successfully with valid username and password', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
@@ -120,4 +120,17 @@ test('should prevent access to the inventory page after the user logs out', asyn
 });
 
 }
+
+test('should clear the password field after page refresh', async ({ page }) => {
+  await page.locator('[data-test="username"]').fill(user);
+  await page.locator('[data-test="password"]').fill(pass);
+  await page.reload();
+
+  await expect(page.locator('[data-test="password"]')).toHaveValue('');
+});
+
+test('password field should have type password', async ({ page }) => {
+  await expect(page.locator('[data-test="password"]')).toHaveAttribute('type', 'password');
+});
+
 });
