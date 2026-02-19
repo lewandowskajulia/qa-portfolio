@@ -133,4 +133,23 @@ test('password field should have type password', async ({ page }) => {
   await expect(page.locator('[data-test="password"]')).toHaveAttribute('type', 'password');
 });
 
+test('should not log in with extremely long username and password', async ({ page }) => {
+  const longString = 'a'.repeat(500);
+
+  await page.locator('[data-test="username"]').fill(longString);
+  await page.locator('[data-test="password"]').fill(longString);
+  await page.locator('[data-test="login-button"]').click();
+
+  await expect(page.locator('[data-test="error"]')).toBeVisible();
+});
+
+test('should require login after session cookie is removed', async ({ page, context }) => {
+  await page.locator('[data-test="username"]').fill(user);
+  await page.locator('[data-test="password"]').fill(pass);
+  await page.locator('[data-test="login-button"]').click();
+
+  await context.clearCookies();
+  await page.goto(inventoryURL);
+  await expect(page).toHaveURL(url);
+});
 });
