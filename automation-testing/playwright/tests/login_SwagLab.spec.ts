@@ -119,8 +119,6 @@ test('should prevent access to the inventory page after the user logs out', asyn
   await expect(page.locator('[data-test="error"]')).toHaveText("Epic sadface: You can only access '/inventory.html' when you are logged in.");
 });
 
-}
-
 test('should clear the password field after page refresh', async ({ page }) => {
   await page.locator('[data-test="username"]').fill(user);
   await page.locator('[data-test="password"]').fill(pass);
@@ -152,4 +150,6 @@ test('should require login after session cookie is removed', async ({ page, cont
   await page.goto(inventoryURL);
   await expect(page).toHaveURL(url);
 });
+
+}
 });
