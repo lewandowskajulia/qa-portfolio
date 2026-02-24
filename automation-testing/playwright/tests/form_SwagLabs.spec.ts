@@ -69,6 +69,7 @@ test('should allow form submission after closing the error message and providing
 
 test.describe('Order summary and purchase process' , () => {
 
+  
   test.beforeEach( async ({ page }) => {
     await page.locator('[data-test="checkout"]').click();
     await page.locator('[data-test="firstName"]').fill('Qwe');
@@ -101,6 +102,8 @@ test('should include tax in the total order price', async ({ page }) => {
   const total = Number((totalText ?? '').replace('Total: $', ''));
   expect(total).toBe(itemPrice + tax);
 });
+
+
 
 test('should complete the purchase successfully', async ({ page }) => {
   await page.locator('[data-test="finish"]').click();
