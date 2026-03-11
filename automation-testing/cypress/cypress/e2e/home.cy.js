@@ -4,8 +4,7 @@ const homePage = new HomePage()
 const URL = 'https://www.saucedemo.com/'
 
 describe('Page', () => {
-
-
+  
   beforeEach(() => {
     homePage.visit()
   })
