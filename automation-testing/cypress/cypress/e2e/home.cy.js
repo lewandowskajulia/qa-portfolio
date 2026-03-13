@@ -15,6 +15,10 @@ describe('Page', () => {
       cy.url().should('eq', URL)
     })
 
+    it('should return 200 status for homepage', () => {
+    cy.request(URL).its('status').should('eq', 200)
+    })
+
   it('should return 404 for non-existing page', () => {
     cy.request({
       url: 'https://www.saucedemo.com/non-existing-page',
@@ -26,6 +30,10 @@ describe('Page', () => {
       homePage.getLogo().should('be.visible').and('contain.text', 'Swag Labs')
     })
 
+    it('should have correct input types', () => {
+    homePage.getUsernameInput().should('have.attr', 'type', 'text')
+    homePage.getPasswordInput().should('have.attr', 'type', 'password')
+    })
 
     it('should display correct placeholders for login inputs', () => {
       homePage.getUsernameInput().should('have.attr', 'placeholder', 'Username')
