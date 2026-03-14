@@ -62,6 +62,16 @@ describe('Login', () => {
       loginPage.clickLogin()
       loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Sorry, this user has been locked out.')
     })
+
+    it('should close the error message when clicking the close button', () => {
+  loginPage.fillUsername('wrong')
+  loginPage.fillPassword('wrong')
+  loginPage.clickLogin()
+
+  loginPage.getErrorMessage().should('be.visible')
+  loginPage.closeErrorMessage()
+  loginPage.getErrorMessage().should('not.exist')
+})
   })
 
 describe.only('Logout', () => {
