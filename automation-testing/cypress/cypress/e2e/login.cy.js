@@ -74,7 +74,7 @@ describe('Login', () => {
 })
   })
 
-describe.only('Logout', () => {
+describe('Logout', () => {
 
   beforeEach(() => {
     loginPage.login(VALID_USER, VALID_PASSWORD)
