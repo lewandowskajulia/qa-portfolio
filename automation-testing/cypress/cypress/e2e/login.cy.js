@@ -16,8 +16,8 @@ describe('Login', () => {
 
   describe('Successful login', () => {
     it('should log in successfully with valid credentials', () => {
-    loginPage.login(VALID_USER, VALID_PASSWORD)
-    cy.url().should('eq', PRODUCTS_PAGE)
+      loginPage.login(VALID_USER, VALID_PASSWORD)
+      cy.url().should('eq', PRODUCTS_PAGE)
     }) 
 
     it('should mask password input', () => {
@@ -64,21 +64,21 @@ describe('Login', () => {
     })
 
     it('should close the error message when clicking the close button', () => {
-  loginPage.fillUsername('wrong')
-  loginPage.fillPassword('wrong')
-  loginPage.clickLogin()
+      loginPage.fillUsername('wrong')
+      loginPage.fillPassword('wrong')
+      loginPage.clickLogin()
 
-  loginPage.getErrorMessage().should('be.visible')
-  loginPage.closeErrorMessage()
-  loginPage.getErrorMessage().should('not.exist')
-})
+      loginPage.getErrorMessage().should('be.visible')
+      loginPage.closeErrorMessage()
+      loginPage.getErrorMessage().should('not.exist')
+    })
   })
 
 describe('Logout', () => {
 
   beforeEach(() => {
-    loginPage.login(VALID_USER, VALID_PASSWORD)
-  })
+      loginPage.login(VALID_USER, VALID_PASSWORD)
+    })
 
     it('should log out the user and redirect to the login page', () => {
       loginPage.logout()
