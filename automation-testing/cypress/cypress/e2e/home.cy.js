@@ -16,11 +16,11 @@ describe('Page', () => {
     })
 
     it('should return 200 status for homepage', () => {
-    cy.request(URL).its('status').should('eq', 200)
+      cy.request(URL).its('status').should('eq', 200)
     })
 
-  it('should return 404 for non-existing page', () => {
-    cy.request({
+    it('should return 404 for non-existing page', () => {
+      cy.request({
       url: 'https://www.saucedemo.com/non-existing-page',
       failOnStatusCode: false})
       .its('status').should('eq', 404)
@@ -31,8 +31,8 @@ describe('Page', () => {
     })
 
     it('should have correct input types', () => {
-    homePage.getUsernameInput().should('have.attr', 'type', 'text')
-    homePage.getPasswordInput().should('have.attr', 'type', 'password')
+      homePage.getUsernameInput().should('have.attr', 'type', 'text')
+      homePage.getPasswordInput().should('have.attr', 'type', 'password')
     })
 
     it('should display correct placeholders for login inputs', () => {
@@ -46,7 +46,7 @@ describe('Page', () => {
       homePage.getLoginButton().should('be.visible')
     })
     
-  it('should display login page correctly on mobile viewport', () => {
+    it('should display login page correctly on mobile viewport', () => {
       cy.viewport('iphone-6')
       
       homePage.getLoginButton().should('be.visible')
