@@ -48,7 +48,6 @@ describe('Page', () => {
     
     it('should display login page correctly on mobile viewport', () => {
       cy.viewport('iphone-6')
-      
       homePage.getLoginButton().should('be.visible')
     })
   })
