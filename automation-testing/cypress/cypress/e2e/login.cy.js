@@ -44,16 +44,16 @@ describe('Login', () => {
       loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Username is required')
     })
 
-    it('should display an error when password is missing', () =>  {
-      loginPage.fillUsername(VALID_USER)
-      loginPage.clickLogin()
-      loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Password is required')
-    })
-
     it('should display an error when username is missing', () => {
       loginPage.fillPassword(VALID_PASSWORD)
       loginPage.clickLogin()
       loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Username is required')
+    })
+
+    it('should display an error when password is missing', () =>  {
+      loginPage.fillUsername(VALID_USER)
+      loginPage.clickLogin()
+      loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Password is required')
     })
 
     it('should display an error for a locked out user', () => {
