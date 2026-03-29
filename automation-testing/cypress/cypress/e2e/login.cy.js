@@ -81,6 +81,7 @@ describe('Logout', () => {
       loginPage.login(VALID_USER, VALID_PASSWORD)
     })
 
+
     it('should log out the user and redirect to the login page', () => {
       loginPage.logout()
       cy.url().should('eq', URL)
@@ -94,6 +95,7 @@ describe('Logout', () => {
       loginPage.getErrorMessage().should('be.visible').and('contain', "Epic sadface: You can only access '/inventory.html' when you are logged in.")
     })
   })
+  
 
 })
   
