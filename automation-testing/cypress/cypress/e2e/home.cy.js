@@ -22,23 +22,22 @@ describe('Page', () => {
     it('should return 404 for non-existing page', () => {
       cy.request({
       url: 'https://www.saucedemo.com/non-existing-page',
-      failOnStatusCode: false})
-      .its('status').should('eq', 404)
+      failOnStatusCode: false}).its('status').should('eq', 404)
     })
 
     it('should display Swag Labs logo', () => {
       homePage.getLogo().should('be.visible').and('contain.text', 'Swag Labs')
     })
 
-    it('should have correct input types', () => {
-      homePage.getUsernameInput().should('have.attr', 'type', 'text')
-      homePage.getPasswordInput().should('have.attr', 'type', 'password')
-    })
-
     it('should display login form', () => {
       homePage.getUsernameInput().should('be.visible')
       homePage.getPasswordInput().should('be.visible')
       homePage.getLoginButton().should('be.visible')
+    })
+
+    it('should have correct input types', () => {
+      homePage.getUsernameInput().should('have.attr', 'type', 'text')
+      homePage.getPasswordInput().should('have.attr', 'type', 'password')
     })
 
     it('should display correct placeholders for login inputs', () => {
