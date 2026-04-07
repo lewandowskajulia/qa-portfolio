@@ -35,18 +35,21 @@ describe('Page', () => {
       homePage.getLoginButton().should('be.visible')
     })
 
+
     it('should have correct input types', () => {
       homePage.getUsernameInput().should('have.attr', 'type', 'text')
       homePage.getPasswordInput().should('have.attr', 'type', 'password')
     })
 
+
+        it('should display login page correctly on mobile viewport', () => {
+      cy.viewport('iphone-6')
+      homePage.getLoginButton().should('be.visible')
+    })
+    
     it('should display correct placeholders for login inputs', () => {
       homePage.getUsernameInput().should('have.attr', 'placeholder', 'Username')
       homePage.getPasswordInput().should('have.attr', 'placeholder', 'Password')
     })
     
-    it('should display login page correctly on mobile viewport', () => {
-      cy.viewport('iphone-6')
-      homePage.getLoginButton().should('be.visible')
-    })
   })
