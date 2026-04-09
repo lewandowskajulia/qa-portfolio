@@ -89,17 +89,6 @@ describe('Cart and Checkout', () => {
       checkoutOverviewPage.getTotal().should('be.visible')
     });
 
-    it('should match product price with order summary subtotal', () => {
-      checkoutOverviewPage.getItemPriceText().then(itemPriceText => {
-      const itemPrice = parseFloat(itemPriceText.replace('$', ''));
-      checkoutOverviewPage.getSubtotalText().then(summaryText => {
-      const summaryPrice = parseFloat(summaryText.replace('Item total: $', ''));
-      expect(itemPrice).to.equal(summaryPrice);
-      });
-    });
-    });
-
-
     it('should add tax to the order total', () => {
       checkoutOverviewPage.getSubtotalText().then(subtotalText => {
       const subtotal = parseFloat(subtotalText.replace('Item total: $', ''));
@@ -108,6 +97,16 @@ describe('Cart and Checkout', () => {
       checkoutOverviewPage.getTotalText().then(totalText => {
       const total = parseFloat(totalText.replace('Total: $', ''));
       expect(total).to.equal(subtotal + tax);});
+      });
+    });
+    });
+
+    it('should match product price with order summary subtotal', () => {
+      checkoutOverviewPage.getItemPriceText().then(itemPriceText => {
+      const itemPrice = parseFloat(itemPriceText.replace('$', ''));
+      checkoutOverviewPage.getSubtotalText().then(summaryText => {
+      const summaryPrice = parseFloat(summaryText.replace('Item total: $', ''));
+      expect(itemPrice).to.equal(summaryPrice);
       });
     });
     });
