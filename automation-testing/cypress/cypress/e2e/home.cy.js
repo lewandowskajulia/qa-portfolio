@@ -9,7 +9,6 @@ describe('Page', () => {
     homePage.visit()
   })
 
-
     it('should display correct page title for the login page and URL', () => {
       cy.title().should('eq', 'Swag Labs')
       cy.url().should('eq', URL)
@@ -25,10 +24,10 @@ describe('Page', () => {
       failOnStatusCode: false}).its('status').should('eq', 404)
     })
 
-
     it('should display Swag Labs logo', () => {
       homePage.getLogo().should('be.visible').and('contain.text', 'Swag Labs')
     })
+
 
     it('should display login form', () => {
       homePage.getUsernameInput().should('be.visible')

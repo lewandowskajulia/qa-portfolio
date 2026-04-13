@@ -8,6 +8,7 @@ automation using Cypress.
 The tests cover the most important user flows, including login, product browsing,
 cart functionality and checkout process.
 
+
 ## Tested areas
 - Login and logout
 - Homepage UI elements and validations
@@ -19,11 +20,13 @@ cart functionality and checkout process.
 - Completing the purchase successfully
 - Basic responsive check (mobile viewport)
 
+
 ## Tech stack / Tools
 - Cypress (end-to-end testing)
 - JavaScript (ES6)
 - Page Object Model (POM) for test organization
 - Node.js / npm for dependencies
+
 
 ## How to run tests
 
