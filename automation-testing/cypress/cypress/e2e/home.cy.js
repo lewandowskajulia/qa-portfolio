@@ -28,20 +28,17 @@ describe('Page', () => {
       homePage.getLogo().should('be.visible').and('contain.text', 'Swag Labs')
     })
 
-
     it('should display login form', () => {
       homePage.getUsernameInput().should('be.visible')
       homePage.getPasswordInput().should('be.visible')
       homePage.getLoginButton().should('be.visible')
     })
 
-
     it('should have correct input types', () => {
       homePage.getUsernameInput().should('have.attr', 'type', 'text')
       homePage.getPasswordInput().should('have.attr', 'type', 'password')
     })
 
-    
     it('should display login page correctly on mobile viewport', () => {
       cy.viewport('iphone-6')
       homePage.getLoginButton().should('be.visible')
