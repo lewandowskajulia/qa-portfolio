@@ -20,8 +20,6 @@ const POSTALCODE = '12-345'
 
 describe('Cart and Checkout', () => {
 
-
-
   beforeEach( () => {
     loginPage.visit(URL)
     loginPage.login(VALID_USER, VALID_PASSWORD)
@@ -30,7 +28,6 @@ describe('Cart and Checkout', () => {
     productsPage.getCartBadge().should('have.text', '1')
     productsPage.getCartLink().click()
     formPage.clickCheckOutButton()
-    
 
   });
 

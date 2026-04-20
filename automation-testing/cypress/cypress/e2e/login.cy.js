@@ -51,6 +51,8 @@ describe('Login', () => {
       loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Password is required')
     })
 
+    
+    
     it('should display an error when username and password are empty', () => {
       loginPage.clickLogin()
       loginPage.getErrorMessage().should('be.visible').and('contain', 'Epic sadface: Username is required')
