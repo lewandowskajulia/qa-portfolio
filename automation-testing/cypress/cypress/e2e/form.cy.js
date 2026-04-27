@@ -45,18 +45,18 @@ describe('Cart and Checkout', () => {
       formPage.getErrorMessage().should('have.text', 'Error: First Name is required')
     });
     
-    it('should show error when postal code is missing', () => {
-      formPage.fillFirstName(FIRSTNAME)
-      formPage.fillLastName(LASTNAME);
-      formPage.clickContinueButton()
-      formPage.getErrorMessage().should('have.text', 'Error: Postal Code is required');
-    });
-
     it('should show error when last name is missing', () => {
       formPage.fillFirstName(FIRSTNAME)
       formPage.fillPostalCode(POSTALCODE)
       formPage.clickContinueButton()
       formPage.getErrorMessage().should('have.text', 'Error: Last Name is required');
+    });
+
+    it('should show error when postal code is missing', () => {
+      formPage.fillFirstName(FIRSTNAME)
+      formPage.fillLastName(LASTNAME);
+      formPage.clickContinueButton()
+      formPage.getErrorMessage().should('have.text', 'Error: Postal Code is required');
     });
 
     it('should close error message and fill out the form correctly', () => {
