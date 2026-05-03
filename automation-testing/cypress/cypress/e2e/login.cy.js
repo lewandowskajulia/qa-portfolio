@@ -95,5 +95,25 @@ describe('Logout', () => {
       loginPage.getErrorMessage().should('be.visible').and('contain', "Epic sadface: You can only access '/inventory.html' when you are logged in.")
     })
   })
+
+describe('Security testing', () => {
+  it('should not allow SQL injection in login', () => {
+  const SQL_PAYLOAD = "' OR '1'='1"
+
+  loginPage.fillUsername(SQL_PAYLOAD)
+  loginPage.fillPassword(SQL_PAYLOAD)
+  loginPage.clickLogin()
+  loginPage.getErrorMessage().should('be.visible')
+})
+
+  it('should prevent XSS in login fields', () => {
+  const XSS_PAYLOAD = "<script>alert('xss')</script>"
+  loginPage.fillUsername(XSS_PAYLOAD)
+  loginPage.fillPassword('test')
+  loginPage.clickLogin()
+  loginPage.getErrorMessage().should('be.visible')
+  })
+
+})
 })
   
