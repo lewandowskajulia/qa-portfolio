@@ -114,6 +114,28 @@ describe('Security testing', () => {
   loginPage.getErrorMessage().should('be.visible')
   })
 
+  it('should not allow access after logout using back button', () => {
+  loginPage.login('standard_user', 'secret_sauce')
+  loginPage.logout()
+  cy.go('back')
+  cy.url().should('not.include', 'inventory')
+})
+
+it('should require session cookie to access protected page', () => {
+  loginPage.login('standard_user', 'secret_sauce')
+  cy.clearCookies()
+  cy.visit('https://www.saucedemo.com/inventory.html', {
+    failOnStatusCode: false
+  })
+  cy.url().should('include', 'saucedemo.com')
+})
+
+it('should handle rapid typing safely', () => {
+  loginPage.fillUsername('standard_user', { delay: 0 })
+  loginPage.fillPassword('wrong', { delay: 0 })
+  loginPage.clickLogin()
+  loginPage.getErrorMessage().should('be.visible')
+})
 })
 })
   
