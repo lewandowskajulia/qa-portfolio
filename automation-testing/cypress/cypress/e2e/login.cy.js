@@ -136,6 +136,11 @@ it('should handle rapid typing safely', () => {
   loginPage.clickLogin()
   loginPage.getErrorMessage().should('be.visible')
 })
+
+it('should not render HTML from input', () => {
+  loginPage.login('<b>admin</b>', 'test')
+  loginPage.getErrorMessage().should('be.visible')
+})
 })
 })
   
