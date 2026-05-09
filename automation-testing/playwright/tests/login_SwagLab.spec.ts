@@ -151,5 +151,14 @@ test('should require login after session cookie is removed', async ({ page, cont
   await expect(page).toHaveURL(url);
 });
 
+test('should not log in with SQL injection attempt', async ({ page }) => {
+  await page.locator('[data-test="username"]').fill("' OR '1'='1");
+  await page.locator('[data-test="password"]').fill("' OR '1'='1");
+  await page.locator('[data-test="login-button"]').click();
+
+  await expect(page).toHaveURL(url);
+  await expect(page.locator('[data-test="error"]')).toBeVisible();
+});
+
 }
 });
