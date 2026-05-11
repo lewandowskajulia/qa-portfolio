@@ -159,6 +159,10 @@ test('should not log in with SQL injection attempt', async ({ page }) => {
   await expect(page).toHaveURL(url);
   await expect(page.locator('[data-test="error"]')).toBeVisible();
 });
+test('should use HTTPS connection', async ({ page }) => {
+  await page.goto(url);
+  expect(page.url().startsWith('https://')).toBeTruthy();
+});
 
 }
 });
