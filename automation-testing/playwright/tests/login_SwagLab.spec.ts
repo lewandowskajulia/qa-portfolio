@@ -159,6 +159,17 @@ test('should not log in with SQL injection attempt', async ({ page }) => {
   await expect(page).toHaveURL(url);
   await expect(page.locator('[data-test="error"]')).toBeVisible();
 });
+
+test('should not render HTML from input fields', async ({ page }) => {
+  const payload = '<img src=x onerror=alert(1)>';
+  await page.locator('[data-test="username"]').fill(payload);
+  await page.locator('[data-test="password"]').fill(payload);
+  await page.locator('[data-test="login-button"]').click();
+
+  const content = await page.content();
+  expect(content).not.toContain('onerror');
+});
+
 test('should use HTTPS connection', async ({ page }) => {
   await page.goto(url);
   expect(page.url().startsWith('https://')).toBeTruthy();
