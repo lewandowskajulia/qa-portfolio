@@ -170,11 +170,11 @@ test('should not render HTML from input fields', async ({ page }) => {
   expect(content).not.toContain('onerror');
 });
 
-test('should use HTTPS connection', async ({ page }) => {
+test('should connect using HTTPS', async ({ page }) => {
   await page.goto(url);
   expect(page.url().startsWith('https://')).toBeTruthy();
 });
-test('should clear error message when user starts typing again', async ({ page }) => {
+test('should clear the error message when input changes', async ({ page }) => {
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toBeVisible();
   await page.locator('[data-test="username"]').fill('standard_user');
